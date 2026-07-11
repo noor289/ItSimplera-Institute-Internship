@@ -102,7 +102,7 @@ Random Forest is carried forward as the baseline model, based on the lowest test
 ![Correlation Heatmap](images/correlation_heatmap.png)
 
 **Average Usage by Load Type**
-![Hourly Usage](images/usage_load_type.png)
+![Load Type Usage](images/usage_load_type.png)
  
 **Average Usage by Hour of Day**
 ![Hourly Usage](images/hourly_usage.png)
