@@ -95,4 +95,20 @@ Random Forest is carried forward as the baseline model, based on the lowest test
  
 ## Screenshots
  
-XScreenshots
+**Usage_kWh Outlier Boxplot**
+![Outlier Boxplot](images/outlier_boxplot.png)
+ 
+**Correlation Heatmap**
+![Correlation Heatmap](images/correlation_heatmap.png)
+
+**Average Usage by Load Type**
+![Hourly Usage](images/usage_load_type.png)
+ 
+**Average Usage by Hour of Day**
+![Hourly Usage](images/hourly_usage.png)
+ 
+**Test RMSE Comparison Across Models**
+![RMSE Comparison](images/rmse_comparison.png)
+ 
+**Predicted vs Actual — Random Forest**
+![Predicted vs Actual](images/predicted_vs_actual.png)
