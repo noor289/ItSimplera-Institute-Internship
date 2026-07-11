@@ -6,8 +6,8 @@ Deep exploratory analysis, feature engineering, and baseline regression modeling
  
 This project has two parts:
  
-1. **EDA & Feature Engineering** (`week2_eda.ipynb`) — explores the dataset, engineers new features from the raw columns, and documents data quality issues and patterns.
-2. **Baseline Regression Modeling** (`week2_baseline_models.ipynb`) — uses the engineered features to train and compare four regression models for predicting `Usage_kWh`, and selects the best-performing one as a baseline.
+1. **EDA & Feature Engineering** (`week2_eda.ipynb`) : explores the dataset, engineers new features from the raw columns, and documents data quality issues and patterns.
+2. **Baseline Regression Modeling** (`week2_baseline_models.ipynb`) : uses the engineered features to train and compare four regression models for predicting `Usage_kWh`, and selects the best-performing one as a baseline.
 ## Dataset
  
 - **Name:** Steel Industry Energy Consumption Dataset
@@ -37,15 +37,15 @@ jupyter notebook
  
 Starting from the raw columns, the following features were added:
  
-- `hour` — hour of day, extracted from `date`
-- `month` — month, extracted from `date`
-- `is_weekend` — binary flag, 1 if Saturday/Sunday
-- `Power_Factor_Ratio` — `Leading_Current_Power_Factor / Lagging_Current_Power_Factor`, with 0/0 rows replaced by 1.0 (a balanced-state edge case rather than an undefined ratio)
-- `High_Load` — binary flag, 1 if `Usage_kWh` is above the 75th percentile (used only in the EDA notebook; dropped before modeling since it directly leaks the target)
+- `hour` : hour of day, extracted from `date`
+- `month` : month, extracted from `date`
+- `is_weekend` : binary flag, 1 if Saturday/Sunday
+- `Power_Factor_Ratio` : `Leading_Current_Power_Factor / Lagging_Current_Power_Factor`, with 0/0 rows replaced by 1.0 (a balanced-state edge case rather than an undefined ratio)
+- `High_Load` : binary flag, 1 if `Usage_kWh` is above the 75th percentile (used only in the EDA notebook; dropped before modeling since it directly leaks the target)
 ## EDA Findings
  
 - No missing values across any column.
-- `NSM` and `hour` are perfectly correlated (r = 1.00) — same information in different units, so `NSM` was dropped before modeling.
+- `NSM` and `hour` are perfectly correlated (r = 1.00) , same information in different units, so `NSM` was dropped before modeling.
 - `CO2(tCO2)` correlates at 0.99 with `Usage_kWh` because it is calculated directly from energy usage in this dataset, not measured independently. It was excluded from the correlation ranking and dropped before modeling to avoid target leakage.
 - The genuinely informative correlated features are `Lagging_Current_Reactive.Power_kVarh` (0.90) and `Lagging_Current_Power_Factor` (0.39).
 - IQR method flagged 328 outliers in `Usage_kWh`, consistent with a right-skewed distribution and genuine high-load periods rather than data errors.
@@ -72,7 +72,7 @@ Full write-up is in the markdown summary cell at the end of `week2_eda.ipynb`.
  
 **Best model: Random Forest.**
  
-- Linear and Ridge perform almost identically with no train/test gap — expected for a simple model with little capacity to overfit, but they underfit the non-linear relationship between the electrical features and `Usage_kWh`.
+- Linear and Ridge perform almost identically with no train/test gap , expected for a simple model with little capacity to overfit, but they underfit the non-linear relationship between the electrical features and `Usage_kWh`.
 - Decision Tree shows clear overfitting: a perfect train R² of 1.0000 means it memorized the training data. Its test performance is still good, but the gap makes it less trustworthy on unseen data.
 - Random Forest shows only a small train/test gap and stable, low-variance performance across CV folds, making it the most reliable model of the four.
 Full metrics, charts, and the detailed model selection write-up are in `week2_baseline_models.ipynb`.
@@ -96,19 +96,19 @@ Random Forest is carried forward as the baseline model, based on the lowest test
 ## Screenshots
  
 **Usage_kWh Outlier Boxplot**
-![Outlier Boxplot](images/outlier_boxplot.png)
+![Outlier Boxplot](../images/outlier_boxplot.png)
  
 **Correlation Heatmap**
-![Correlation Heatmap](images/correlation_heatmap.png)
+![Correlation Heatmap](../images/correlation_heatmap.png)
 
 **Average Usage by Load Type**
-![Load Type Usage](images/usage_load_type.png)
+![Load Type Usage](../images/usage_load_type.png)
  
 **Average Usage by Hour of Day**
-![Hourly Usage](images/hourly_usage.png)
+![Hourly Usage](../images/hourly_usage.png)
  
 **Test RMSE Comparison Across Models**
-![RMSE Comparison](images/rmse_comparison.png)
+![RMSE Comparison](../images/rmse_comparison.png)
  
 **Predicted vs Actual — Random Forest**
-![Predicted vs Actual](images/predicted_vs_actual.png)
+![Predicted vs Actual](../images/predicted_vs_actual.png)
