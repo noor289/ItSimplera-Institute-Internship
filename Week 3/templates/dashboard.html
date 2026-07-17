@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 style="margin-bottom:20px;">Dashboard</h1>
+
+<div class="panel">
+  <span class="eyebrow">Hourly Load Profile</span>
+  <h2>Average Energy Usage by Hour of Day</h2>
+  <img src="/static/energy_by_hour.png" alt="Average energy usage by hour of day">
+</div>
+
+<div class="panel">
+  <span class="eyebrow">Load Classification</span>
+  <h2>Average Energy Usage by Load Type</h2>
+  <img src="/static/energy_by_load_type.png" alt="Average energy usage by load type">
+</div>
+
+<div class="panel">
+  <span class="eyebrow">Feature Relationships</span>
+  <h2>Correlation Heatmap</h2>
+  <img src="/static/correlation_heatmap.png" alt="Correlation heatmap of numeric features">
+</div>
+{% endblock %}

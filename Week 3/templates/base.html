@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Steel Energy Predictor{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #10161D;
+    --panel: #1B242E;
+    --panel-border: #2C3948;
+    --text: #E7EDF3;
+    --text-muted: #8FA0B0;
+    --copper: #C9793C;
+    --copper-bright: #E2953F;
+    --patina: #4FA893;
+    --led: #6FCF7C;
+    --danger: #E2664B;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 40px);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.01em; margin: 0 0 8px; font-weight: 600; }
+  h1 { font-size: 1.9rem; }
+  h2 { font-size: 1.15rem; color: var(--text); }
+
+  nav.panel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+    border-bottom: 1px solid var(--panel-border);
+    padding: 0 28px;
+    height: 56px;
+    flex-wrap: wrap;
+  }
+  .nav-links { display: flex; gap: 4px; height: 100%; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 100%;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--copper-bright);
+    border-bottom-color: var(--copper);
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+  .led {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--led);
+    box-shadow: 0 0 8px var(--led);
+    flex-shrink: 0;
+  }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-left: 3px solid var(--copper);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--patina);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  img { max-width: 100%; border-radius: 6px; display: block; }
+
+  .nameplate {
+    background: linear-gradient(155deg, #222D39, #171F27);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 20px 26px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 22px;
+  }
+  .nameplate .stat .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .nameplate .stat .value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.25rem;
+    color: var(--copper-bright);
+    font-weight: 600;
+  }
+
+  table.field-table { border-collapse: collapse; width: 100%; }
+  table.field-table td { padding: 8px 6px; border-bottom: 1px solid var(--panel-border); vertical-align: middle; }
+  table.field-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.83rem;
+    color: var(--text);
+  }
+  table.field-table td:last-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: right;
+  }
+  input[type="text"] {
+    width: 110px;
+    background: #0E141A;
+    border: 1px solid var(--panel-border);
+    color: var(--copper-bright);
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 6px 8px;
+    border-radius: 5px;
+    font-size: 0.88rem;
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--copper);
+    box-shadow: 0 0 0 3px rgba(201,121,60,0.2);
+  }
+
+  button {
+    background: var(--copper);
+    color: #14100B;
+    border: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 11px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    margin-top: 18px;
+  }
+  button:hover { background: var(--copper-bright); }
+  button:focus-visible { outline: 2px solid var(--copper-bright); outline-offset: 2px; }
+
+  .readout {
+    margin-top: 22px;
+    background: #0E141A;
+    border: 1px solid var(--panel-border);
+    border-left: 3px solid var(--led);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .readout .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .readout .value { font-family: 'IBM Plex Mono', monospace; font-size: 1.6rem; color: var(--led); font-weight: 600; }
+  .readout.error { border-left-color: var(--danger); }
+  .readout.error .value { color: var(--danger); font-size: 1.02rem; }
+
+  p { color: var(--text-muted); line-height: 1.65; }
+  a { color: var(--patina); }
+  a:hover { color: var(--copper-bright); }
+  ul { color: var(--text-muted); line-height: 1.9; padding-left: 20px; }
+
+  @media (max-width: 640px) {
+    .nameplate { grid-template-columns: 1fr; }
+    nav.panel-bar { height: auto; padding: 12px 20px; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+<nav class="panel-bar">
+  <div class="nav-links">
+    <a href="/" class="{{ 'active' if active == 'home' else '' }}">Home</a>
+    <a href="/dashboard" class="{{ 'active' if active == 'dashboard' else '' }}">Dashboard</a>
+    <a href="/predict" class="{{ 'active' if active == 'predict' else '' }}">Prediction</a>
+  </div>
+  <div class="status"><span class="led"></span>MODEL ONLINE &middot; RANDOM FOREST</div>
+</nav>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

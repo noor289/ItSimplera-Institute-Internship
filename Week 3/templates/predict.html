@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Predict{% endblock %}
+{% block content %}
+<h1 style="margin-bottom:6px;">Predict Energy Consumption</h1>
+<p style="margin-top:0;">Enter a value for every model feature below, then run the prediction.</p>
+
+<div class="panel">
+  <span class="eyebrow">Input Array</span>
+  <form method="post" action="/predict">
+    <table class="field-table">
+      {% for field in fields %}
+      <tr>
+        <td>{{ field.name }}</td>
+        <td><input type="text" id="{{ field.name }}" name="{{ field.name }}"
+               value="{{ field.value if field.value is defined else '0' }}" required></td>
+        <td>{{ field.hint }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    <button type="submit">Run Prediction</button>
+  </form>
+
+  {% if prediction %}
+    <div class="readout {{ 'error' if error else '' }}">
+      <div class="label">{{ 'Error' if error else 'Predicted Usage' }}</div>
+      <div class="value">{{ prediction }}</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

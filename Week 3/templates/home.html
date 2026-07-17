@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="panel">
+  <span class="eyebrow">Facility Monitoring</span>
+  <h1>Steel Industry Energy Consumption Predictor</h1>
+  <p>
+    Trained on a year of 15-minute interval energy readings from a steel
+    industry facility. This instance serves the best-performing model from
+    Week 2, selected by cross-validation RMSE.
+  </p>
+  <ul>
+    <li><a href="/dashboard">Dashboard</a> &mdash; key visualizations from the EDA.</li>
+    <li><a href="/predict">Prediction</a> &mdash; enter feature values to get a real-time energy consumption estimate.</li>
+  </ul>
+
+  <div class="nameplate">
+    <div class="stat">
+      <div class="label">Model</div>
+      <div class="value">Random Forest</div>
+    </div>
+    <div class="stat">
+      <div class="label">CV RMSE</div>
+      <div class="value">1.22 kWh</div>
+    </div>
+    <div class="stat">
+      <div class="label">Test R&sup2;</div>
+      <div class="value">0.999</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
